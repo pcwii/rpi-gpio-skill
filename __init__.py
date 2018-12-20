@@ -36,11 +36,13 @@ class GPIOSkill(MycroftSkill):
         self.register_intent(gpio_intent, self.handle_gpio_intent)
 
     def handle_gpio_intent(self, message):
+        str_limits = []
         str_remainder = str(message.utterance_remainder())
-        if str_remainder.find('for') or str_remainder.find('four'):
+        if (str_remainder.find('for') != -1) or (str_remainder.find('four') != -1):
             str_limits = [4]
         else:
             str_limits = re.findall('\d+', str_remainder)
+
         if str_limits:
             gpio_request = int(str_limits[0])
             if (gpio_request > 1) and (gpio_request < 28):
