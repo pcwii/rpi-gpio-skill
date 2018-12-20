@@ -33,7 +33,7 @@ class GPIOSkill(MycroftSkill):
         GPIO.setmode(GPIO.BOARD)
         self.load_data_files(dirname(__file__))
         gpio_intent = IntentBuilder("GPIOIntent").\
-            require("GPIOKeyword").\
+            require("GpioKeyword").\
             one_of("OnKeyword", "OffKeyword").build()
         self.register_intent(gpio_intent, self.handle_gpio_intent)
 
