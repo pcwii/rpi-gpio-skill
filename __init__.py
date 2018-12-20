@@ -1,4 +1,3 @@
-
 from os.path import dirname
 from adapt.intent import IntentBuilder
 from mycroft.skills.core import MycroftSkill
@@ -8,7 +7,6 @@ from mycroft.util.log import LOG
 import RPi.GPIO as GPIO
 
 import re
-import random
 
 __author__ = 'PCWii'
 
@@ -64,7 +62,7 @@ class GPIOSkill(MycroftSkill):
     def gpio_off(self, gpio_number, pin_number):
         GPIO.setup(gpio_number, GPIO.OUT, initial=0)
         GPIO.output(gpio_number, False)
-        LOG.info('Turning Off GPIO Pin Number: ' + str(pin_number))
+        LOG.info('Turning Off GPIO Pin Number: ' + str(gpio_number))
         self.speak_dialog("off", data={"result": str(pin_number)})
 
     def stop(self):
