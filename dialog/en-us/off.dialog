@@ -1,2 +1,2 @@
-i have turned off, g,p,i,o, pin {{result}}
-the g,p,i,o, pin, {{result}} should now be off
+i have turned off, g,p,i,o, {{result}}
+g,p,i,o, {{result}} should now be off

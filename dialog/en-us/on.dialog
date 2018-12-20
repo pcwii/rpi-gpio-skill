@@ -1,2 +1,2 @@
-i have turned on, g,p,i,o, pin {{result}}
-the g,p,i,o, pin, {{result}} should now be on
+i have turned on, g,p,i,o, {{result}}
+g,p,i,o, {{result}} should now be on

@@ -39,31 +39,31 @@ class GPIOSkill(MycroftSkill):
         str_remainder = str(message.utterance_remainder())
         str_limits = re.findall('\d+', str_remainder)
         if str_limits:
-            int_first = int(str_limits[0])
-            LOG.info('The pin number requested was: ' + str(int_first))
-            if (int_first > 1) and (int_first < 28):
-                pin_index = int_first - 2
+            gpio_request = int(str_limits[0])
+            if (gpio_request > 1) and (gpio_request < 28):
+                pin_index = gpio_request - 2
                 board_pin = self.io_pins[pin_index]
+                LOG.info('The pin number requested was: ' + str(board_pin))
                 if "OnKeyword" in message.data:
-                    self.gpio_on(board_pin, int_first)
+                    self.gpio_on(board_pin, gpio_request)
                 if "OffKeyword" in message.data:
-                    self.gpio_off(board_pin, int_first)
+                    self.gpio_off(board_pin, gpio_request)
             else:
-                self.speak_dialog("error", data={"result": str(int_first)})
+                self.speak_dialog("error", data={"result": str(gpio_request)})
         else:
             self.speak('No GPIO Pin was specified')
 
-    def gpio_on(self, gpio_number, pin_number):
-        GPIO.setup(gpio_number, GPIO.OUT, initial=0)
-        GPIO.output(gpio_number, True)
-        LOG.info('Turning On GPIO Pin Number: ' + str(gpio_number))
-        self.speak_dialog("on", data={"result": str(pin_number)})
+    def gpio_on(self, board_number, gpio_request_number):
+        GPIO.setup(board_number, GPIO.OUT, initial=0)
+        GPIO.output(board_number, True)
+        LOG.info('Turning On GPIO Number: ' + str(gpio_request_number))
+        self.speak_dialog("on", data={"result": str(gpio_request_number)})
 
-    def gpio_off(self, gpio_number, pin_number):
-        GPIO.setup(gpio_number, GPIO.OUT, initial=0)
-        GPIO.output(gpio_number, False)
-        LOG.info('Turning Off GPIO Pin Number: ' + str(gpio_number))
-        self.speak_dialog("off", data={"result": str(pin_number)})
+    def gpio_off(self, board_number, gpio_request_number):
+        GPIO.setup(board_number, GPIO.OUT, initial=0)
+        GPIO.output(board_number, False)
+        LOG.info('Turning Off GPIO Pin Number: ' + str(gpio_request_number))
+        self.speak_dialog("off", data={"result": str(gpio_request_number)})
 
     def stop(self):
         pass
