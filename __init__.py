@@ -40,17 +40,20 @@ class GPIOSkill(MycroftSkill):
     def handle_gpio_intent(self, message):
         str_remainder = str(message.utterance_remainder())
         str_limits = re.findall('\d+', str_remainder)
-        int_first = int(str_limits[0])
-        LOG.info('The pin number requested was: ' + str(int_first))
-        if (int_first > 1) and (int_first < 28):
-            pin_index = int_first - 2
-            board_pin = self.io_pins[pin_index]
-            if "OnKeyword" in message.data:
-                self.gpio_on(board_pin, int_first)
-            if "OffKeyword" in message.data:
-                self.gpio_off(board_pin, int_first)
+        if str_limits:
+            int_first = int(str_limits[0])
+            LOG.info('The pin number requested was: ' + str(int_first))
+            if (int_first > 1) and (int_first < 28):
+                pin_index = int_first - 2
+                board_pin = self.io_pins[pin_index]
+                if "OnKeyword" in message.data:
+                    self.gpio_on(board_pin, int_first)
+                if "OffKeyword" in message.data:
+                    self.gpio_off(board_pin, int_first)
+            else:
+                self.speak_dialog("error", data={"result": str(int_first)})
         else:
-            self.speak_dialog("error", data={"result": str(int_first)})
+            self.speak('No GPIO Pin was specified')
 
     def gpio_on(self, gpio_number, pin_number):
         GPIO.setup(gpio_number, GPIO.OUT, initial=0)
