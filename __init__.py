@@ -5,7 +5,7 @@ from mycroft.skills.core import MycroftSkill
 from mycroft.util.log import getLogger
 from mycroft.util.log import LOG
 
-#from gpiozero import LED
+# from gpiozero import LED
 import RPi.GPIO as GPIO
 
 import re
