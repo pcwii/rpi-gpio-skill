@@ -5,7 +5,6 @@ from mycroft.skills.core import MycroftSkill
 from mycroft.util.log import getLogger
 from mycroft.util.log import LOG
 
-# from gpiozero import LED
 import RPi.GPIO as GPIO
 
 import re
@@ -30,7 +29,8 @@ class GPIOSkill(MycroftSkill):
     # This method loads the files needed for the skill's functioning, and
     # creates and registers each intent that the skill uses
     def initialize(self):
-        GPIO.setmode(GPIO.BCM)
+        self.io_pins = [3, 5, 7, 29, 31, 26, 24, 21, 19, 23, 32, 33, 8, 10, 36, 11, 12, 35, 38, 40, 15, 16, 18, 22, 37, 13]
+        GPIO.setmode(GPIO.BOARD)
         self.load_data_files(dirname(__file__))
         gpio_intent = IntentBuilder("GPIOIntent").\
             require("GpioKeyword").\
@@ -43,10 +43,12 @@ class GPIOSkill(MycroftSkill):
         int_first = int(str_limits[0])
         LOG.info('The pin number requested was: ' + str(int_first))
         if (int_first > 1) and (int_first < 28):
+            pin_index = int_first - 2
+            board_pin = self.io_pins[pin_index]
             if "OnKeyword" in message.data:
-                self.gpio_on(int_first)
+                self.gpio_on(board_pin)
             if "OffKeyword" in message.data:
-                self.gpio_off(int_first)
+                self.gpio_off(board_pin)
         else:
             self.speak_dialog("error", data={"result": str(int_first)})
 
