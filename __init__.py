@@ -40,7 +40,7 @@ class GPIOSkill(MycroftSkill):
         if str_remainder.find('for') or str_remainder.find('four'):
             str_limits = [4]
         else:
-        str_limits = re.findall('\d+', str_remainder)
+            str_limits = re.findall('\d+', str_remainder)
         if str_limits:
             gpio_request = int(str_limits[0])
             if (gpio_request > 1) and (gpio_request < 28):
