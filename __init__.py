@@ -46,23 +46,23 @@ class GPIOSkill(MycroftSkill):
             pin_index = int_first - 2
             board_pin = self.io_pins[pin_index]
             if "OnKeyword" in message.data:
-                self.gpio_on(board_pin)
+                self.gpio_on(board_pin, int_first)
             if "OffKeyword" in message.data:
-                self.gpio_off(board_pin)
+                self.gpio_off(board_pin, int_first)
         else:
             self.speak_dialog("error", data={"result": str(int_first)})
 
-    def gpio_on(self, pin_number):
-        GPIO.setup(pin_number, GPIO.OUT, initial=0)
-        GPIO.output(pin_number, True)
-        LOG.info('Turning On GPIO Pin Number: ' + str(pin_number))
+    def gpio_on(self, gpio_number, pin_number):
+        GPIO.setup(gpio_number, GPIO.OUT, initial=0)
+        GPIO.output(gpio_number, True)
+        LOG.info('Turning On GPIO Pin Number: ' + str(gpio_number))
         # led.on()
         self.speak_dialog("on", data={"result": str(pin_number)})
 
-    def gpio_off(self, pin_number):
+    def gpio_off(self, gpio_number, pin_number):
         #led = LED(pin_number)
-        GPIO.setup(pin_number, GPIO.OUT, initial=0)
-        GPIO.output(pin_number, False)
+        GPIO.setup(gpio_number, GPIO.OUT, initial=0)
+        GPIO.output(gpio_number, False)
         LOG.info('Turning Off GPIO Pin Number: ' + str(pin_number))
 
         # led.on()
