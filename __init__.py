@@ -37,9 +37,9 @@ class GPIOSkill(MycroftSkill):
 
     def handle_gpio_intent(self, message):
         str_remainder = str(message.utterance_remainder())
-        #if str_remainder.find('for') or str_remainder.find('four'):
-        #    str_limits = [4]
-        #else:
+        if str_remainder.find('for') or str_remainder.find('four'):
+            str_limits = [4]
+        else:
         str_limits = re.findall('\d+', str_remainder)
         if str_limits:
             gpio_request = int(str_limits[0])
@@ -65,7 +65,7 @@ class GPIOSkill(MycroftSkill):
     def gpio_off(self, board_number, gpio_request_number):
         GPIO.setup(board_number, GPIO.OUT, initial=0)
         GPIO.output(board_number, False)
-        LOG.info('Turning Off GPIO Pin Number: ' + str(gpio_request_number))
+        LOG.info('Turning Off GPIO Number: ' + str(gpio_request_number))
         self.speak_dialog("off", data={"result": str(gpio_request_number)})
 
     def stop(self):
