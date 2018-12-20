@@ -56,16 +56,12 @@ class GPIOSkill(MycroftSkill):
         GPIO.setup(gpio_number, GPIO.OUT, initial=0)
         GPIO.output(gpio_number, True)
         LOG.info('Turning On GPIO Pin Number: ' + str(gpio_number))
-        # led.on()
         self.speak_dialog("on", data={"result": str(pin_number)})
 
     def gpio_off(self, gpio_number, pin_number):
-        #led = LED(pin_number)
         GPIO.setup(gpio_number, GPIO.OUT, initial=0)
         GPIO.output(gpio_number, False)
         LOG.info('Turning Off GPIO Pin Number: ' + str(pin_number))
-
-        # led.on()
         self.speak_dialog("off", data={"result": str(pin_number)})
 
     def stop(self):
