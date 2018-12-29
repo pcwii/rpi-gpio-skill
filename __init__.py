@@ -23,6 +23,7 @@ class GPIOSkill(MycroftSkill):
     # The constructor of the skill, which calls Mycroft Skill's constructor
     def __init__(self):
         super(GPIOSkill, self).__init__(name="GPIOSkill")
+        self.myKeywords = []
 
     # This method loads the files needed for the skill's functioning, and
     # creates and registers each intent that the skill uses
@@ -30,6 +31,11 @@ class GPIOSkill(MycroftSkill):
         self.io_pins = [3, 5, 7, 29, 31, 26, 24, 21, 19, 23, 32, 33, 8, 10, 36, 11, 12, 35, 38, 40, 15, 16, 18, 22, 37, 13]
         GPIO.setmode(GPIO.BOARD)
         self.load_data_files(dirname(__file__))
+        self.myKeywords = [
+            "Josh",
+            "Phil",
+            "Max"
+        ]
         gpio_intent = IntentBuilder("GPIOIntent").\
             require("GpioKeyword").\
             one_of("OnKeyword", "OffKeyword").build()
@@ -57,6 +63,14 @@ class GPIOSkill(MycroftSkill):
                 self.speak_dialog("error", data={"result": str(gpio_request)})
         else:
             self.speak('No GPIO Pin was specified')
+
+    @intent_handler(IntentBuilder('TestCustomIntent').require(self.myKeywords)
+                    .one_of("OnKeyword", "OffKeyword").build())
+    def handle_test_custom_intent(self, message):
+        self.speak(message.utterance)
+
+
+
 
     def gpio_on(self, board_number, gpio_request_number):
         GPIO.setup(board_number, GPIO.OUT, initial=0)
